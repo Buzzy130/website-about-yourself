@@ -8,13 +8,12 @@ if (isset($_POST['send'])) {
     $komment->message = $_POST['message'];
 
     R::store($komment);
-    header('location: /');
+    //header('location: /');
 }
 
 ?>
-
-
 <!DOCTYPE html>
+
 <html lang="ru">
 
 <head>
@@ -25,7 +24,7 @@ if (isset($_POST['send'])) {
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,700,900" rel="stylesheet">
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
     <script src="ajax.js"></script>
 
@@ -345,28 +344,19 @@ if (isset($_POST['send'])) {
             </div>
         </div>
     </div>
-
-
+    
     <div class="section animated-row" data-section="slide06">
-        <form action="" method="post">
+        <form id="form" method="post">
             <div class="section-inner">
                 <div class="row justify-content-center">
                     <div class="col-md-7 wide-col-laptop">
                         <div class="title-block animate" data-animate="fadeInUp">
-
                             <div class="input-field">
-                                <input class="form-control" type="text" id="name" name="name" required
-                                       placeholder="name">
+                                <input class="form-control" type="text" id="name" name="name" required placeholder="name">
                             </div>
-
-                            <input align="right" class="form-control" type="email" id="email" name="email" required
-                                   placeholder="email">
-
-                            <textarea class="form-control" id="message" name="message" required
-                                      placeholder="message"></textarea>
-                            <input class="btn" type="submit" name="send">
-
-
+                            <input class="form-control" type="email" id="email" name="email" required placeholder="email">
+                            <textarea class="form-control" id="message" name="message" required placeholder="message"></textarea>
+                            <input class="btn" type="submit" id="btn" name="send">
                         </div>
                     </div>
                 </div>
@@ -449,6 +439,25 @@ if (isset($_POST['send'])) {
 
 <script src="js/custom.js"></script>
 
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $("#form").submit(function (e) { // Устанавливаем событие отправки для формы с id=form
+        e.preventDefault();
+        var form_data = $(this).serialize(); // Собираем все данные из формы
+        $.ajax({
+            type: "POST", // Метод отправки
+            url: "foo.php", // Путь до php файла отправителя
+            data: form_data,
+            success: function () {
+                // Код в этом блоке выполняется при успешной отправке сообщения
+                alert("Ваше сообщение отправлено!");
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
